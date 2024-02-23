@@ -8,7 +8,7 @@ You use the software provided at your own risk. I cannot be held responsible for
 This open-source program uses Python to scrape data from Facebook Marketplace. The program uses Playwright to navigate the Facebook Marketplace website and BeautifulSoup to parse the HTML and extract relevant data. It then displays the results in a Streamlit GUI.
 
 ### Customization
-This program can be customized to your personal/organizational needs. For more information, please get in touch with me at harmindernijjar1996@gmail.com
+This program can be customized to your personal/organizational needs. For more information, please get in touch with me at coldder159@gmail.com
 - Streamlit
 - Playwright
 - BeautifulSoup 
