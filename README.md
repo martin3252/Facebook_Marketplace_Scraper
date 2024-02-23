@@ -1,11 +1,5 @@
 # facebook-marketplace-scraper
 
-<p align="center">
-<img src="https://i.imgur.com/YXkulJV.png">
-
-</p>
-<h3 align="center">An open-source Python program to scrape Facebook Marketplace using Playwright, BeautifulSoup, and FastAPI with a Streamlit GUI.
-<h3 align="center">
 
 ```diff
 You use the software provided at your own risk. I cannot be held responsible for any potential consequences, including potential bans from Meta.
@@ -53,3 +47,9 @@ This program can be customized to your personal/organizational needs. For more i
 - User inputs for city, search query, and maximum price.
 - Submission button to start scraping.
 - Display of scraping results including number of results, images, prices, locations, and item URLs.
+
+### How to run:
+- python3 app.py
+- Streamlit run gui.py
+
+### This repository is based on https://github.com/passivebot/facebook-marketplace-scraper
