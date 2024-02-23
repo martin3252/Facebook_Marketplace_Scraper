@@ -48,6 +48,6 @@ This program can be customized to your personal/organizational needs. For more i
 
 ### How to run:
 1. python3 app.py
-2. Streamlit run gui.py
+2. streamlit run gui.py
 
 ### This repository is based on https://github.com/passivebot/facebook-marketplace-scraper
