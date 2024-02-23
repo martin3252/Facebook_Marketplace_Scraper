@@ -13,11 +13,6 @@ This program can be customized to your personal/organizational needs. For more i
 - Playwright
 - BeautifulSoup 
   
-### Language: 
-- [Python](https://www.python.org/)
-  
-### Flow diagrams:
-
 ### Requirements:
 - Python 3.x
 - Playwright
@@ -48,8 +43,11 @@ This program can be customized to your personal/organizational needs. For more i
 - Submission button to start scraping.
 - Display of scraping results including number of results, images, prices, locations, and item URLs.
 
+### How to install:
+1. pip install -r requirements.txt
+
 ### How to run:
-- python3 app.py
-- Streamlit run gui.py
+1. python3 app.py
+2. Streamlit run gui.py
 
 ### This repository is based on https://github.com/passivebot/facebook-marketplace-scraper
