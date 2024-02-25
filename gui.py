@@ -1,5 +1,5 @@
 import streamlit as st
-import json 
+import json
 import requests
 from PIL import Image
 
@@ -12,7 +12,7 @@ supported_sortby = ["best_match", "price_ascend", "price_descend", "vehicle_mile
 supported_make = ["Toyota", "Honda", "Mazda", "all"]
 supported_transmission = ["automatic", "manual"]
 
-# Take user input 
+# Take user input
 city = st.selectbox("City", supported_cities, 0)
 make_Type = st.selectbox("Make Type", supported_make, 0)
 model_Type = st.text_input("Model")
@@ -39,15 +39,15 @@ if submit:
     else:
         pass
     res = requests.get(f"http://127.0.0.1:8000/crawl_facebook_marketplace?city={city}&min_mileage={min_mileage}&max_mileage={max_mileage}&max_price={max_price}&min_price={min_price}&min_year={min_year}&max_year={max_year}&transmission_Type={transmission_Type}&make_Type={make_Type}&radius={radius}&sortBy={sortBy}&model_Type={model_Type}")
-    
-    
+
+
     # Convert the response from json into a Python list.
     results = res.json()
-    print(results)
-    
+    #print(results)
+
     # Display the length of the results list.
     st.write(f"Number of results: {len(results)}")
-    
+
     # Iterate over the results list to display each item.
     for item in results:
         st.header(item["title"])
@@ -60,8 +60,3 @@ if submit:
         st.write(f"https://www.facebook.com{item['link']}")
         st.write(item['msg'])
         st.write("----")
-    
-
-      
-
-

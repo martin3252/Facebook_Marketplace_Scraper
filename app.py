@@ -21,7 +21,7 @@ import json
 # The uvicorn library is used to run the API.
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-                 
+
 # Create an instance of the FastAPI class.
 app = FastAPI()
 # Configure CORS
@@ -56,7 +56,7 @@ def root():
 @app.get("/crawl_facebook_marketplace")
 # Define a function to be executed when the endpoint is called.
 # Add a description to the function.
-def crawl_facebook_marketplace(city: str, max_price: int, min_price: int, min_year: int, max_year: int, 
+def crawl_facebook_marketplace(city: str, max_price: int, min_price: int, min_year: int, max_year: int,
                                transmission_Type: str, make_Type: str, radius: int, sortBy: str,
                                min_mileage: int, max_mileage: int, model_Type: str):
     # Define dictionary of cities from the facebook marketplace directory for United States.
@@ -79,7 +79,7 @@ def crawl_facebook_marketplace(city: str, max_price: int, min_price: int, min_ye
         # Raise an HTTPException.
         raise HTTPException (404, f'{city} is not a city we are currently supporting on the Facebook Marketplace. Please reach out to us to add this city in our directory.')
         # TODO - Try and find a way to get city location ids from Facebook if the city is not in the cities dictionary.
-        
+
     # Define the URL to scrape.
     marketplace_url = f'https://www.facebook.com/marketplace/{city}/vehicles?&minMileage={min_mileage}&maxMileage={max_mileage}&maxPrice={max_price}&minPrice={min_price}&minYear={min_year}&maxYear={max_year}&transmissionType={transmission_Type}&make={make_Type}&radius={radius}&sortBy={sortBy}&model={model_Type}'
     initial_url = "https://www.facebook.com/login/device-based/regular/login/"
@@ -89,7 +89,7 @@ def crawl_facebook_marketplace(city: str, max_price: int, min_price: int, min_ye
         # Open a new browser page.
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        
+
         # Navigate to the URL.
         page.goto(initial_url)
         # Wait for the page to load.
@@ -101,19 +101,25 @@ def crawl_facebook_marketplace(city: str, max_price: int, min_price: int, min_ye
             login_button = page.wait_for_selector('button[name="login"]').click()
             time.sleep(2)
             page.goto(marketplace_url)
+            time.sleep(2)
+            #close login information
+            button = page.query_selector('div[aria-label="Close"]')
+            button.click()
+
         except:
             page.goto(marketplace_url)
         # Wait for the page to load.
         time.sleep(2)
-       
+
         html = page.content()
         soup = BeautifulSoup(html, 'html.parser')
-       
+
+
         parsed = []
         listings = soup.find_all('div', class_='x9f619 x78zum5 x1r8uery xdt5ytf x1iyjqo2 xs83m0k x1e558r4 x150jy0e x1iorvi4 xjkvuk6 xnpuxes x291uyu x1uepa24')
-        for listing in listings:
+        for listing in listings[:1]:
             new_page = browser.new_page()
-            try:
+            if True:
                 # Get the item image.
                 image = listing.find('img', class_='xt7dq6l xl1xv1r x6ikm8r x10wlt62 xh8yej3')['src']
                 # Get the item title from span.
@@ -124,33 +130,44 @@ def crawl_facebook_marketplace(city: str, max_price: int, min_price: int, min_ye
                 post_url = listing.find('a', class_='x1i10hfl xjbqb8w x1ejq31n xd10rxx x1sy0etr x17r0tee x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz x1heor9g x1lku1pv')['href']
                 # Get the item location and mileage.
                 datas = listing.find_all('span', class_='x1lliihq x6ikm8r x10wlt62 x1n2onr6 xlyipyv xuxw1ft')
-                for index, d in enumerate(datas):    
-                    #Get location             
+                for index, d in enumerate(datas):
+                    #Get location
                     if index == 0:
                         location = d.get_text()
-                    # Get mileage    
+                    # Get mileage
                     else:
                         mileage = d.get_text()
 
                 # Get seller message
                 new_page.goto(f"https://www.facebook.com{post_url}")
-                time.sleep(5)
+                #print(f"https://www.facebook.com{post_url}")
+
+                html = new_page.content()
+                soup = BeautifulSoup(html, 'html.parser')
+                ### close the login notice
+
+                button = new_page.query_selector('div[aria-label="Close"]')
+                button.click()
+                time.sleep(3)
                 see_more_buttons = new_page.query_selector_all('span:has-text("See more")')
                 see_more_buttons[-1].click()
                 time.sleep(2)
-    
+
                 html = new_page.content()
                 soup = BeautifulSoup(html, 'html.parser')
 
                 listing_msg = soup.find_all('span', class_='x193iq5w xeuugli x13faqbe x1vvkbs x10flsy6 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x41vudc x6prxxf xvq8zen xo1l8bm xzsf02u')
+
                 transmission =''
                 for index,l in enumerate(listing_msg):
+
                     l = l.get_text()
+                    #print(l)
                     if re.findall(r"transmission",l):
                         transmission = l
                     elif index == 5:
                         msg = l.replace(' See less','')
-                time.sleep(2)    
+                time.sleep(2)
                 new_page.close()
                 # Append the parsed data to the list.
                 parsed.append({
@@ -163,7 +180,7 @@ def crawl_facebook_marketplace(city: str, max_price: int, min_price: int, min_ye
                     'mileage': mileage,
                     'transmission': transmission
                 })
-            except:
+            else:
                 new_page.close()
         # Close the browser.
         browser.close()
