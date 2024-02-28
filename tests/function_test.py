@@ -1,6 +1,5 @@
 import utils
 
 
-def test_regular_experssion():
-    result = utils.check_transmission_type("automatic transmission")
-    assert result == False
+def test_transmission():
+    assert utils.check_transmission_type('auto transmission') == True
