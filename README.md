@@ -11,26 +11,26 @@ This open-source program uses Python to scrape data from Facebook Marketplace. T
 This program can be customized to your personal/organizational needs. For more information, please get in touch with me at martinHH0283@gmail.com
 - Streamlit
 - Playwright
-- BeautifulSoup 
-  
+- BeautifulSoup
+
 ### Requirements:
 - Python 3.x
 - Playwright
 - Streamlit
-- BeautifulSoup 
-  
+- BeautifulSoup
+
 ### Modules:
 - Playwright for web crawling
 - BeautifulSoup for HTML parsing
 - FastAPI for API creation
 - JSON for data formatting
 - Uvicorn for running the server
- 
+
 ### API:
 - Root: Displays a welcome message
 - Data scraping: Parameters include city, query, and max price
 - IP information retrieval
-  
+
 ### Implementation
 - Browser automation and data scraping using Playwright
 - HTML content parsing with BeautifulSoup

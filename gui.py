@@ -1,7 +1,5 @@
-import streamlit as st
-import json
 import requests
-from PIL import Image
+import streamlit as st
 
 # Create a title for the web app.
 st.title("Facebook Marketplace Vehichle Scraper")
@@ -24,7 +22,7 @@ min_mileage = st.text_input("Min Mileage", "50000")
 max_mileage = st.text_input("Max Mileage", "100000")
 transmission_Type = st.selectbox('transmission_Type', supported_transmission, 0)
 radius = st.text_input('radius', '20')
-sortBy = st.selectbox("Sort By",supported_sortby,0)
+sortBy = st.selectbox("Sort By", supported_sortby, 0)
 
 # Create a button to submit the form.
 submit = st.button("Submit")
@@ -35,15 +33,17 @@ if submit:
     if "," in max_price:
         max_price = max_price.replace(",", "")
     elif "," in min_price:
-        min_price = min_price.replace(',','')
+        min_price = min_price.replace(',', '')
     else:
         pass
-    res = requests.get(f"http://127.0.0.1:8000/crawl_facebook_marketplace?city={city}&min_mileage={min_mileage}&max_mileage={max_mileage}&max_price={max_price}&min_price={min_price}&min_year={min_year}&max_year={max_year}&transmission_Type={transmission_Type}&make_Type={make_Type}&radius={radius}&sortBy={sortBy}&model_Type={model_Type}")
-
+    res = requests.get(
+        f"http://127.0.0.1:8000/crawl_facebook_marketplace?city={city}&min_mileage={min_mileage}&max_mileage={max_mileage}&max_price={max_price}&min_price={min_price}&min_year={min_year}&max_year={max_year}&transmission_Type={transmission_Type}&make_Type={make_Type}&radius={radius}&sortBy={sortBy}&model_Type={model_Type}",
+        timeout=100,
+    )
 
     # Convert the response from json into a Python list.
     results = res.json()
-    #print(results)
+    # print(results)
 
     # Display the length of the results list.
     st.write(f"Number of results: {len(results)}")
