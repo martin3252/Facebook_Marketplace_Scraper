@@ -31,7 +31,7 @@ jobs:
 
       - uses: everlytic/branch-merge@1.1.2
         with:
-          github_token: ${{ github.token }}
+          github_token: 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
           source_ref: ${{ github.ref }}
           target_branch: 'main'
           commit_message_template: '[Automated] Merged Features into target main'
