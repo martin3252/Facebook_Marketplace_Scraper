@@ -13,7 +13,7 @@ jobs:
         python-version: ["3.8"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
@@ -28,3 +28,11 @@ jobs:
         run: |
           pip install pytest
           pytest tests/*
+
+      - uses: actions/checkout@v4
+      - uses: everlytic/branch-merge@1.1.2
+        with:
+          github_token: ${{ github.token }}
+          source_ref: ${{ github.ref }}
+          target_branch: 'main'
+          commit_message_template: '[Automated] Merged Features into target main'
