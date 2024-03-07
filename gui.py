@@ -1,6 +1,8 @@
 import requests
 import streamlit as st
 
+from utils import postprocess_car_list
+
 # Create a title for the web app.
 st.title("Facebook Marketplace Vehichle Scraper")
 
@@ -38,12 +40,14 @@ if submit:
         pass
     res = requests.get(
         f"http://127.0.0.1:8000/crawl_facebook_marketplace?city={city}&min_mileage={min_mileage}&max_mileage={max_mileage}&max_price={max_price}&min_price={min_price}&min_year={min_year}&max_year={max_year}&transmission_Type={transmission_Type}&make_Type={make_Type}&radius={radius}&sortBy={sortBy}&model_Type={model_Type}",
-        timeout=100,
+        timeout=1000,
     )
 
     # Convert the response from json into a Python list.
     results = res.json()
-    # print(results)
+
+    # post-process results
+    new_results = postprocess_car_list(results)
 
     # Display the length of the results list.
     st.write(f"Number of results: {len(results)}")
