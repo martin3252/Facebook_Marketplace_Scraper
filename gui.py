@@ -1,6 +1,9 @@
+import json
+
 import requests
 import streamlit as st
 
+from GPT import call_GPT
 from utils import postprocess_car_list
 
 # Create a title for the web app.
@@ -21,7 +24,7 @@ max_year = st.text_input("Max Year", "2020")
 min_price = st.text_input("Min Price", "10000")
 max_price = st.text_input("Max Price", "15000")
 min_mileage = st.text_input("Min Mileage", "50000")
-max_mileage = st.text_input("Max Mileage", "100000")
+max_mileage = st.text_input("Max Mileage", "150000")
 transmission_Type = st.selectbox('transmission_Type', supported_transmission, 0)
 radius = st.text_input('radius', '20')
 sortBy = st.selectbox("Sort By", supported_sortby, 0)
@@ -49,6 +52,12 @@ if submit:
     # post-process results
     new_results = postprocess_car_list(results)
 
+    # call_GPT
+    GPT_results = call_GPT(new_results)
+
+    # string to dict object
+    GPT_results = json.loads(GPT_results)
+
     # Display the length of the results list.
     st.write(f"Number of results: {len(results)}")
 
@@ -64,3 +73,8 @@ if submit:
         st.write(f"https://www.facebook.com{item['link']}")
         st.write(item['msg'])
         st.write("----")
+        st.write("GPT comment")
+
+    for car, context in GPT_results.items():
+        # print(gpt_car)
+        st.write(car + ":" + context + '\n')

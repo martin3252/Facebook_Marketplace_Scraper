@@ -25,3 +25,15 @@ def postprocess_car_list(car_list):
         new_r["description"] = r["msg"]
         car_list_for_gpt.append(new_r)
     return car_list_for_gpt
+
+
+def process_car_list_for_gpt(car_list):
+    input_string = "```\n"
+    # format gpt input
+    for car in car_list:
+        input_string = input_string + "car_index: " + str(car['car_index']) + '\n'
+        input_string = input_string + "price: " + str(car["price"]) + '\n'
+        input_string = input_string + "mileage: " + str(car["mileage"]) + '\n'
+        input_string = input_string + "description: " + str(car["description"]) + '\n'
+        input_string += "```\n"
+    return input_string
