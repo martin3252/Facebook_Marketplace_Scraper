@@ -29,7 +29,7 @@ max_mileage = st.text_input("Max Mileage", "150000")
 transmission_Type = st.selectbox('transmission_Type', supported_transmission, 0)
 radius = st.text_input('radius', '20')
 sortBy = st.selectbox("Sort By", supported_sortby, 0)
-GPT = st.selectbox("Enable GPT or not", 0)
+GPT = st.selectbox("Enable GPT or not", GPT_option, 0)
 
 # Create a button to submit the form.
 submit = st.button("Submit")
@@ -54,7 +54,7 @@ if submit:
     # post-process results
     new_results = postprocess_car_list(results)
 
-    if GPT_option == "Yes":
+    if GPT == "Yes":
         # call_GPT
         GPT_results = call_GPT(new_results)
 
@@ -76,7 +76,7 @@ if submit:
         st.write(f"https://www.facebook.com{item['link']}")
         st.write(item['msg'])
         st.write("----")
-        if GPT_option == "Yes":
+        if GPT == "Yes":
             st.write("GPT comment")
 
             for car, context in GPT_results.items():
