@@ -5,43 +5,14 @@
 You use the software provided at your own risk. I cannot be held responsible for any potential consequences, including potential bans from Meta.
 ```
 ### Overview
-This open-source program uses Python to scrape data from Facebook Marketplace. The program uses Playwright to navigate the Facebook Marketplace website and BeautifulSoup to parse the HTML and extract relevant data. It then displays the results in a Streamlit GUI.
+This open-source program uses Python to scrape data from Facebook Marketplace. The program uses Playwright to navigate the Facebook Marketplace website and BeautifulSoup to parse the HTML and extract relevant data. It then displays the results in a Streamlit GUI. Analyze results by gpt to find best three cars.
 
 ### Customization
 This program can be customized to your personal/organizational needs. For more information, please get in touch with me at martinHH0283@gmail.com
 - Streamlit
 - Playwright
 - BeautifulSoup
-
-### Requirements:
-- Python 3.x
-- Playwright
-- Streamlit
-- BeautifulSoup
-
-### Modules:
-- Playwright for web crawling
-- BeautifulSoup for HTML parsing
-- FastAPI for API creation
-- JSON for data formatting
-- Uvicorn for running the server
-
-### API:
-- Root: Displays a welcome message
-- Data scraping: Parameters include city, query, and max price
-- IP information retrieval
-
-### Implementation
-- Browser automation and data scraping using Playwright
-- HTML content parsing with BeautifulSoup
-- Data returned in JSON format
-- Application server run using Uvicorn
-
-### Features:
-- List of supported cities for scraping.
-- User inputs for city, search query, and maximum price.
-- Submission button to start scraping.
-- Display of scraping results including number of results, images, prices, locations, and item URLs.
+- GPT
 
 ### How to install:
 1. pip install -r requirements.txt
@@ -49,5 +20,9 @@ This program can be customized to your personal/organizational needs. For more i
 ### How to run:
 1. python3 app.py
 2. streamlit run gui.py
+
+### How to run GPT:
+1. Enalbe GPT in web page (streamlit).
+2. Input you openai api key in GPT.py. This is credential, do not share!!!
 
 ### This repository is based on https://github.com/passivebot/facebook-marketplace-scraper
