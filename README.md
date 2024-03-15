@@ -12,6 +12,7 @@ This program can be customized to your personal/organizational needs. For more i
 - Streamlit
 - Playwright
 - BeautifulSoup
+- GPT
 
 ### Requirements:
 - Python 3.x
@@ -42,6 +43,7 @@ This program can be customized to your personal/organizational needs. For more i
 - User inputs for city, search query, and maximum price.
 - Submission button to start scraping.
 - Display of scraping results including number of results, images, prices, locations, and item URLs.
+- Analyze results from scraping by using gpt to find best three cars.
 
 ### How to install:
 1. pip install -r requirements.txt
