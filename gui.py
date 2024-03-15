@@ -14,6 +14,7 @@ supported_cities = ["Brisbane"]
 supported_sortby = ["best_match", "price_ascend", "price_descend", "vehicle_mileage_ascend", "vehicle_mileage_descend", "vehicle_year_descend", "vehicle_year_ascend"]
 supported_make = ["Toyota", "Honda", "Mazda", "all"]
 supported_transmission = ["automatic", "manual"]
+GPT_option = ["No", "Yes"]
 
 # Take user input
 city = st.selectbox("City", supported_cities, 0)
@@ -28,6 +29,7 @@ max_mileage = st.text_input("Max Mileage", "150000")
 transmission_Type = st.selectbox('transmission_Type', supported_transmission, 0)
 radius = st.text_input('radius', '20')
 sortBy = st.selectbox("Sort By", supported_sortby, 0)
+GPT = st.selectbox("Enable GPT or not", 0)
 
 # Create a button to submit the form.
 submit = st.button("Submit")
@@ -52,11 +54,12 @@ if submit:
     # post-process results
     new_results = postprocess_car_list(results)
 
-    # call_GPT
-    GPT_results = call_GPT(new_results)
+    if GPT_option == "Yes":
+        # call_GPT
+        GPT_results = call_GPT(new_results)
 
-    # string to dict object
-    GPT_results = json.loads(GPT_results)
+        # string to dict object
+        GPT_results = json.loads(GPT_results)
 
     # Display the length of the results list.
     st.write(f"Number of results: {len(results)}")
@@ -73,8 +76,9 @@ if submit:
         st.write(f"https://www.facebook.com{item['link']}")
         st.write(item['msg'])
         st.write("----")
-        st.write("GPT comment")
+        if GPT_option == "Yes":
+            st.write("GPT comment")
 
-    for car, context in GPT_results.items():
-        # print(gpt_car)
-        st.write(car + ":" + context + '\n')
+            for car, context in GPT_results.items():
+                # print(gpt_car)
+                st.write(car + ":" + context + '\n')
